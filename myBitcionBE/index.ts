@@ -22,10 +22,9 @@ const port = parseInt(portServer);
 
 // Configure CORS
 const corsOptions = {
-  origin: process.env.APP_URL_DEPLOY, // Set this to your frontend URL
+  origin: "https://coin-x.online",
+  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
   credentials: true,
-  methods: "GET,POST,PUT,PATCH,DELETE",
-  allowedHeaders: "Content-Type",
 };
 
 app.use(cors(corsOptions));
