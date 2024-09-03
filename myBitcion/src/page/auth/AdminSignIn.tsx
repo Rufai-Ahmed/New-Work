@@ -24,9 +24,9 @@ const AdminSignIn = () => {
           window.location.reload();
           clearTimeout(x);
         }, 10);
-        {
-          !loading && navigate("/admin/dashboard");
-        }
+        // {
+        //   !loading && navigate("/admin/dashboard");
+        // }
       } else if (res?.status !== 200) {
         toast.error(res?.data?.message);
         setLoading(false);
