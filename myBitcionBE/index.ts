@@ -20,15 +20,15 @@ const app: Application = express();
 const portServer = process.env.PORT!;
 const port = parseInt(portServer);
 
-app.use((req: Request, res: Response, next: NextFunction) => {
-  res.header("Access-Control-Allow-Origin", process.env.APP_URL_DEPLOY);
-  res.header("Access-Control-Allow-Credentials", "true");
-  res.header("Access-Control-Allow-Methods", "GET, PUT, PATCH, POST, DELETE");
-  res.header("Access-Control-Allow-Headers", "Content-Type");
-  next();
-});
+// Configure CORS
+const corsOptions = {
+  origin: process.env.APP_URL_DEPLOY, // Set this to your frontend URL
+  credentials: true,
+  methods: "GET,POST,PUT,PATCH,DELETE",
+  allowedHeaders: "Content-Type",
+};
 
-app.use(cors({ origin: "*" }));
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use(morgan("dev"));
 app.use(
@@ -49,8 +49,7 @@ mainApp(app);
 
 const server = app.listen(process.env.PORT || port, () => {
   console.clear();
-
-  console.log();
+  console.log(`Server running on port ${port}`);
   dbConfig();
 });
 
@@ -61,7 +60,6 @@ process.on("uncaughtException", (error: Error) => {
 
 process.on("unhandledRejection", (reason: any) => {
   console.log("unhandledRejection: ", reason);
-
   server.close(() => {
     process.exit(1);
   });
